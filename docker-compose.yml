@@ -8,13 +8,15 @@ services:
         build: 
             context: ./docker
             dockerfile: php.Dockerfile
+        restart: always
         container_name: ${APP_NAME:?err}-php
         volumes: 
             - ./app:/var/www/html
     
     nginx: 
         image: nginx:latest
-        container_name: ${APP_NAME:?err}-nginx        
+        container_name: ${APP_NAME:?err}-nginx
+        restart: always
         ports: 
             - '80:80'
             - '443:443'
@@ -31,11 +33,20 @@ services:
     mysql: 
         image: mysql:5.7
         container_name: ${APP_NAME:?err}-mysql
-        restart: on-failure
+        restart: always
         environment: 
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:?err}
             MYSQL_DATABASE: ${DB_NAME:?${APP_NAME}}
         volumes: 
             - ${PWD}
-
+    
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: dev-phpmyadmin
+        restart: always
+        links: 
+            - mysql
+        environment:
+            - PMA_HOST=mysql
+            - PMA_PORT=3306
         
