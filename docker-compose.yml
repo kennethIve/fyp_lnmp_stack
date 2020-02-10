@@ -35,8 +35,6 @@ services:
         environment: 
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:?err}
             MYSQL_DATABASE: ${DB_NAME}
-        volumes: 
-            - ./dbdata:/var/lib/mysql
     
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -49,6 +47,6 @@ services:
         links: 
             - mysql
         environment:
-            - PMA_HOST=mysql
+            - PMA_HOST=${APP_NAME:?err}-mysql
             - PMA_PORT=3306
         
