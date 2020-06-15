@@ -9,13 +9,17 @@ services:
             context: ./docker
             dockerfile: php.Dockerfile
         restart: always
-        container_name: ${APP_NAME:?err}-php
+        container_name: php
+        depends_on: 
+            - 'mysql'
+        links:
+            - mysql
         volumes: 
             - ./app:/var/www/html
-    
+
     nginx: 
         image: nginx:latest
-        container_name: ${APP_NAME:?err}-nginx
+        container_name: nginx
         restart: always
         ports: 
             - '80:80'
@@ -30,7 +34,7 @@ services:
 
     mysql: 
         image: mysql:5.7
-        container_name: ${APP_NAME:?err}-mysql
+        container_name: mysql
         restart: always
         environment: 
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:?err}
@@ -38,7 +42,7 @@ services:
     
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
-        container_name: Recipe-phpmyadmin
+        container_name: phpmyadmin
         restart: always
         depends_on:
             - mysql
@@ -47,6 +51,5 @@ services:
         links: 
             - mysql
         environment:
-            - PMA_HOST=${APP_NAME:?err}-mysql
+            - PMA_HOST=mysql
             - PMA_PORT=3306
-        
