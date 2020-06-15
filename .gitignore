@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 app/laravel/vendor/
 app/laravel/node_modules/
 app/laravel/npm-debug.log
 app/laravel/.env.*
 
+=======
+db_data
+.env
+app/laravel/vendor
+>>>>>>> 19ecf0cd527ce826973ee0866c54eefcbb7c97b8
