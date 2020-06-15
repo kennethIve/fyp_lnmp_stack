@@ -1,0 +1,5 @@
+app/laravel/vendor/
+app/laravel/node_modules/
+app/laravel/npm-debug.log
+app/laravel/.env.*
+
