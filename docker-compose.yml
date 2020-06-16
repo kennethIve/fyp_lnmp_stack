@@ -46,7 +46,7 @@ services:
         depends_on:
             - mysql
         ports:
-            - '8080:80'
+            - '8081:80'
         links: 
             - mysql
         environment:
@@ -57,7 +57,7 @@ services:
         command: -H unix:///var/run/docker.sock
         restart: always
         ports:
-            - 8081:9000
+            - 8080:9000
             - 9000:8000
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock

@@ -8,4 +8,5 @@ app/laravel/.env.*
 db_data
 .env
 app/laravel/vendor
+docker-compose.yml
 >>>>>>> 19ecf0cd527ce826973ee0866c54eefcbb7c97b8
