@@ -20,6 +20,6 @@ class RestfulApi
         if($ServerAuthKey == $IncomeAuthKey)
             return $next($request);                    
         $message = array("message"=>$IncomeAuthKey."Unauthenticated.".$ServerAuthKey);
-        return $next($message);
+        return response()->json($message);
     }
 }
