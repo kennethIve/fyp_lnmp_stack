@@ -52,9 +52,8 @@ class RecipeApiController extends Controller
      * @return \Illuminate\Http\Response 
      */ 
     public function details() 
-    { 
-        $user = Auth::user();
-        return response()->json(['success' => $user], $this-> successStatus); 
+    {         
+        return response()->json(['success' => "auth success"], $this-> successStatus); 
     }
     
     public function insert(){
