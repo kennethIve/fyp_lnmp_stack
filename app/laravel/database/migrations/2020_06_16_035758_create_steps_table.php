@@ -14,12 +14,12 @@ class CreateStepsTable extends Migration
     public function up()
     {
         Schema::create('steps', function (Blueprint $table) {
+            $table->id("steps_id");
             $table->unsignedBigInteger('recipe_id');
             $table->bigInteger('sequence');
             $table->string('description')->nullable();
 
             //relationship
-            $table->primary(array('recipe_id','sequence'));
             $table->foreign('recipe_id')->references('recipe_id')->on('recipe')->onDelete('cascade');
         });
     }

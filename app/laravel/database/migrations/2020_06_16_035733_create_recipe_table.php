@@ -16,13 +16,14 @@ class CreateRecipeTable extends Migration
         Schema::create('recipe', function (Blueprint $table) {
             //columns
             $table->id('recipe_id');
-            $table->string('name')->nullable();
-            $table->integer('star')->nullable();
-            $table->float('duration')->nullable();
-            $table->string('author')->nullable();
+            $table->string('title')->nullable();
             $table->string('description')->nullable();
-            
-
+            $table->string('image')->nullable();
+            $table->integer('rating')->nullable();
+            $table->integer('skill_term')->nullable();
+            $table->integer('cook_time')->nullable();
+            $table->string('diet_term')->nullable();
+            $table->string('resource_url')->nullable();                        
             //relationship
             
         });

@@ -15,9 +15,11 @@ class CreateRecipeIngredientsTable extends Migration
     {
         Schema::create('recipe_ingredients', function (Blueprint $table) {
             //columns 
+            $table->id('recipe_ingredients_id');
             $table->unsignedBigInteger('recipe_id');
-            $table->bigIncrements('ingred_id');
-            $table->string('content');
+            $table->bigInteger('sequence');
+            $table->string('content')->nullable();
+
             //realtionship
             $table->foreign('recipe_id')->references('recipe_id')->on('recipe')->onDelete('cascade');
         });
