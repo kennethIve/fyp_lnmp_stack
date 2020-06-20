@@ -21,6 +21,12 @@ class RecipeApiController extends Controller
              
         return response()->json(['success' => "auth success","request"=>$request->all()], $this->successStatus); 
     }
+
+    public function getAllRecipe(Request $request)
+    {
+        $result = Recipe::All();
+        return response()->json($result);
+    }
     
     public function insertFromBbcFood(Request $request){
         $message = "";
@@ -56,6 +62,9 @@ class RecipeApiController extends Controller
                     $recipe->ingredients()->save($ingredient);              
                 }                
             }
+            //remove duplication result by same description
+            //just incase the recipe crawler crawler same recipe as we dont fully understand how the api really work
+            DB::delete("delete t1 from recipe t1 inner join recipe t2 where t1.recipe_id != t2.recipe_id and t1.description = t2.description");
             \DB::commit();
         }catch(Exception $e){
             

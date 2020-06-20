@@ -17,7 +17,7 @@ class CreateStepsTable extends Migration
             $table->id("steps_id");
             $table->unsignedBigInteger('recipe_id');
             $table->bigInteger('sequence');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
 
             //relationship
             $table->foreign('recipe_id')->references('recipe_id')->on('recipe')->onDelete('cascade');
