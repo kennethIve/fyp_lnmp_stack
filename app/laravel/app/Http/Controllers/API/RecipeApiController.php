@@ -23,9 +23,11 @@ class RecipeApiController extends Controller
     }
 
     public function getAllRecipe(Request $request)
-    {
+    {        
         $result = Recipe::All();
-        return response()->json($result);
+        $skip  = $request->input("start",0);
+        $take = $request->input("take",5);
+        return response()->json($result->skip($skip)->take($take));
     }
     
     public function insertFromBbcFood(Request $request){

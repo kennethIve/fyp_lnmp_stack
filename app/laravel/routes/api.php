@@ -24,6 +24,7 @@ Route::get('/get_recipe', function (Request $request) {
 
 Route::any('/details',       'API\RecipeApiController@details')->middleware("restfulapi");
 
+Route::get('/getRecipes', 'API\RecipeApiController@getAllRecipe');
 Route::post('/insertFromBbcFood', 'API\RecipeApiController@insertFromBbcFood')->middleware("restfulapi");
     // group(['middleware' => 'auth:api'], function(){
     // Route::any('details', 'API\RecipeApiController@details');
