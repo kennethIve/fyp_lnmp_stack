@@ -22,14 +22,30 @@ class RecipeApiController extends Controller
         return response()->json(['success' => "auth success","request"=>$request->all()], $this->successStatus); 
     }
 
+    public function test(Request $request)
+    {
+        $ingredients = array("chicken","chili");
+        return response()->json(
+            Recipe::with(['ingredients'])->whereHas("ingredients",function($query) use ($ingredients){
+                foreach($ingredients as $value)
+                    $query->where("content",'like',"%$value%");
+            })->skip(2)->take(10)->orderBy("skill_term",'desc')->get()
+        );
+    }
+
     public function getAllRecipe(Request $request)
     {              
         $skip  = $request->input("start",0);
         $take = $request->input("take",5);
         $result = Recipe::skip($skip)->take($take);
-        return response()->json(
-            $result->get()
-            );
+        if($request->has("orderBy")){ //order multi order
+            $i=0;
+            foreach($request->input("orderBy") as $orderBy){
+                $result->orderBy($orderBy,$request->input("order")[$i]);
+                $i++;
+            }
+        }
+        return response()->json($result->with(['ingredients','steps'])->get());
     }
     
     public function insertFromBbcFood(Request $request){

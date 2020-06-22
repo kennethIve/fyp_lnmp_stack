@@ -22,7 +22,9 @@ Route::get('/get_recipe', function (Request $request) {
     return json_encode(array("data"=>"get recipe api"));
 });
 
-Route::any('/details',       'API\RecipeApiController@details')->middleware("restfulapi");
+Route::any('/details','API\RecipeApiController@details')->middleware("restfulapi");
+//testing route
+Route::any('/test', 'API\RecipeApiController@test');
 
 Route::get('/getRecipes', 'API\RecipeApiController@getAllRecipe');
 Route::post('/insertFromBbcFood', 'API\RecipeApiController@insertFromBbcFood')->middleware("restfulapi");
