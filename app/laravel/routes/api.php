@@ -25,8 +25,14 @@ Route::get('/get_recipe', function (Request $request) {
 Route::any('/details','API\RecipeApiController@details')->middleware("restfulapi");
 //testing route
 Route::any('/test', 'API\RecipeApiController@test');
-
+//name search
+Route::get('/getRecipesByName', 'API\RecipeApiController@searchRecipeBykeywords');
+//for list page the use
 Route::get('/getRecipes', 'API\RecipeApiController@getAllRecipe');
+
+//ingredient search
+Route::get('/ingredientSearch', 'API\RecipeApiController@ingredientSearch');
+//detail search for search page
+Route::get('/search', 'API\RecipeApiController@search');
+//for crawler to get
 Route::post('/insertFromBbcFood', 'API\RecipeApiController@insertFromBbcFood')->middleware("restfulapi");
-    // group(['middleware' => 'auth:api'], function(){
-    // Route::any('details', 'API\RecipeApiController@details');

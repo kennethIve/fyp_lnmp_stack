@@ -24,15 +24,15 @@ class RecipeApiController extends Controller
 
     public function test(Request $request)
     {
-        $ingredients = array("chicken","chili");
+        $ingredients = array("chicken");
         return response()->json(
-            Recipe::with(['ingredients'])->whereHas("ingredients",function($query) use ($ingredients){
+            Recipe::with(['ingredients','steps'])->whereHas("ingredients",function($query) use ($ingredients){
                 foreach($ingredients as $value)
                     $query->where("content",'like',"%$value%");
             })->skip(2)->take(10)->orderBy("skill_term",'desc')->get()
         );
     }
-
+    
     public function getAllRecipe(Request $request)
     {              
         $skip  = $request->input("start",0);
@@ -47,7 +47,9 @@ class RecipeApiController extends Controller
         }
         return response()->json($result->with(['ingredients','steps'])->get());
     }
-    
+
+
+    //for webcrawler to use only
     public function insertFromBbcFood(Request $request){
         $message = "";
         try{
@@ -90,7 +92,41 @@ class RecipeApiController extends Controller
             
             return response()->json(["Exception"=>$e]);
         }   
-        return response()->json(['success' => $message], $this-> successStatus); 
+        return response()->json(['success' => $message], $this-> successStatus);
+    }
+    //detail serach
+    public function search(Request $request)
+    {
+
+        return response()->json(['success' => "success","data"=>$this->successStatus]);
     }
 
+    //for search delegate
+    public function searchRecipeBykeywords(Request $request)
+    {
+        $words = $request->input("words");
+        $result = Recipe::with(['ingredients','steps'])->where("title","like","%$words%");
+        return response()->json([
+            "data"=>$result->take(20)->orderByRaw("rating desc","title asc")->get()
+        ]);
+    }
+
+    public function ingredientSearch(Request $request)
+    {
+        $ingredients = $request->input("ingredients",["chicken","wine"]);
+        $r = Recipe::with(['ingredients']);//just take first 5 to speed up query time
+        $r->whereHas("ingredients",function($query) use($ingredients)
+        {            
+            $query->groupBy("recipe_id");
+            foreach($ingredients as $ingredient)
+            {
+                $query->havingRaw("group_concat(content) like \"%$ingredient%\"");
+            }
+        });        
+        return response()->json([
+            'success' => "success",
+            "query"=>$r->toSql(),
+            "data"=>$r->take(5)->get(),            
+        ]);
+    }
 }
