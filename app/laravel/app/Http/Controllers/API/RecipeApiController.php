@@ -113,20 +113,23 @@ class RecipeApiController extends Controller
 
     public function ingredientSearch(Request $request)
     {
+        $skip  = $request->input("start",0);
+        $take = $request->input("take",5);
         $ingredients = $request->input("ingredients",["chicken","wine"]);
-        $r = Recipe::with(['ingredients']);//just take first 5 to speed up query time
+        $r = Recipe::with(['ingredients'])->orderBy("rating","desc");//just take first 5 to speed up query time
         $r->whereHas("ingredients",function($query) use($ingredients)
-        {            
-            $query->groupBy("recipe_id");
+        {              
+            $query->select("recipe_id");          
             foreach($ingredients as $ingredient)
             {
                 $query->havingRaw("group_concat(content) like \"%$ingredient%\"");
             }
+            $query->groupBy("recipe_id");
         });        
         return response()->json([
             'success' => "success",
             "query"=>$r->toSql(),
-            "data"=>$r->take(5)->get(),            
+            "data"=>$r->skip($skip)->take($take)->get(),            
         ]);
     }
 }
