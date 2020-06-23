@@ -48,7 +48,6 @@ class RecipeApiController extends Controller
         return response()->json($result->with(['ingredients','steps'])->get());
     }
 
-
     //for webcrawler to use only
     public function insertFromBbcFood(Request $request){
         $message = "";
@@ -97,6 +96,8 @@ class RecipeApiController extends Controller
     //detail serach
     public function search(Request $request)
     {
+        $skip  = $request->input("start",0);
+        $take = $request->input("take",5);
 
         return response()->json(['success' => "success","data"=>$this->successStatus]);
     }
@@ -105,10 +106,11 @@ class RecipeApiController extends Controller
     public function searchRecipeBykeywords(Request $request)
     {
         $words = $request->input("words");
+        $take = $request->input("take",10);
         $result = Recipe::with(['ingredients','steps'])->where("title","like","%$words%");
-        return response()->json([
-            "data"=>$result->take(20)->orderByRaw("rating desc","title asc")->get()
-        ]);
+        return response()->json(
+            $result->take($take)->orderByRaw("rating desc","title asc")->get()
+        );
     }
 
     public function ingredientSearch(Request $request)
