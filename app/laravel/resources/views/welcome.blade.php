@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Git Hub Action CI/CD Test
                 </div>
                 <img src="" alt="">
                 <div class="links">
