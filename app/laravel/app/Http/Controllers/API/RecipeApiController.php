@@ -96,10 +96,40 @@ class RecipeApiController extends Controller
     //detail serach
     public function search(Request $request)
     {
+        $query = $request->input();
         $skip  = $request->input("start",0);
         $take = $request->input("take",5);
+        //also load ingredients and steps
+        $r = Recipe::with(['ingredients','steps']);
+        //search by keywords
+        $r->where(function($q) use($query){
+            foreach($query["keywords"] as $word)
+            {
+                $q->orWhere("title","like","%$word%");
+            }
+        });
+        //order by statement
+        if($request->has("orderBy"))            
+            $r->orderByRaw(implode (", ", $query["orderBy"]));
+        //cook time statement
+        if($query["from"]==$query["to"]){
+            if($query["from"]==250)
+                $r->where("cook_time",">",$query["from"]*60);
+            elseif($query["from"]==10)
+                $r->where("cook_time","<",$query["from"]*60);
+            else 
+                $r->whereBetween("cook_time",[($query["from"]*60)-10,($query["from"]*60)+10]);        
+        }else
+            $r->whereBetween("cook_time",[($query["from"]*60),($query["from"]*60)]);
 
-        return response()->json(['success' => "success","data"=>$this->successStatus]);
+        return response()->json([
+            "success"      => "success",
+            "status code"  =>  $this->successStatus,
+            "sql query"    =>  $r->toSql(),
+            "query"        =>  $request->input(),            
+            //hide the above when finish debug
+            "data"         =>  $r->skip($skip)->take($take)->get()
+            ]);
     }
 
     //for search delegate
