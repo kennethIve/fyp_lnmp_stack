@@ -120,7 +120,7 @@ class RecipeApiController extends Controller
             else 
                 $r->whereBetween("cook_time",[($query["from"]*60)-10,($query["from"]*60)+10]);        
         }else
-            $r->whereBetween("cook_time",[($query["from"]*60),($query["from"]*60)]);
+            $r->whereBetween("cook_time",[($query["from"]*60),($query["to"]*60)]);
 
         return response()->json([
             "success"      => "success",

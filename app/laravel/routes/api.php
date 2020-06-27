@@ -31,8 +31,8 @@ Route::get('/getRecipesByName', 'API\RecipeApiController@searchRecipeBykeywords'
 Route::get('/getRecipes', 'API\RecipeApiController@getAllRecipe');
 
 //ingredient search
-Route::post('/ingredientSearch', 'API\RecipeApiController@ingredientSearch');
+Route::post('/ingredientSearch', 'API\RecipeApiController@ingredientSearch')->middleware("restfulapi");
 //detail search for search page
-Route::post('/search', 'API\RecipeApiController@search');
+Route::post('/search', 'API\RecipeApiController@search')->middleware("restfulapi");
 //for crawler to get
 Route::post('/insertFromBbcFood', 'API\RecipeApiController@insertFromBbcFood')->middleware("restfulapi");
