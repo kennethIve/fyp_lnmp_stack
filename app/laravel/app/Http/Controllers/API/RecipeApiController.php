@@ -148,7 +148,7 @@ class RecipeApiController extends Controller
         $skip  = $request->input("start",0);
         $take = $request->input("take",5);
         $ingredients = $request->input("ingredients",["chicken","wine"]);
-        $r = Recipe::with(['ingredients'])->orderBy("rating","desc");//just take first 5 to speed up query time
+        $r = Recipe::with(['ingredients','steps'])->orderBy("rating","desc");//just take first 5 to speed up query time
         $r->whereHas("ingredients",function($query) use($ingredients)
         {              
             $query->select("recipe_id");          
