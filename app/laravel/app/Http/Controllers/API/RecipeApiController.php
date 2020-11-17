@@ -181,7 +181,7 @@ class RecipeApiController extends Controller
     public function getAll(Request $request){
         return response()->json([
             'success' => "success",
-            "data"=>Recipe::select('recipe_id','image','resource_url')->all()          
+            "data"=>Recipe::all('recipe_id','image','resource_url')          
         ]);
     }
 }
