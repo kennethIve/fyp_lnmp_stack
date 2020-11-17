@@ -164,4 +164,17 @@ class RecipeApiController extends Controller
             "data"=>$r->skip($skip)->take($take)->get(),            
         ]);
     }
+
+    public function updateImage(Request $request){
+        $recipe_id = $request->input("recipe_id");
+        $new_image = $request->input("new_image");
+        $r = Recipe::find($recipe_id);
+        $r->image = $new_image;
+        //$r->save();
+        return response()->json([
+            'success' => "success",
+            "query"=>$r->image,
+            "old_iamge"=>Recipe::find($recipe_id)          
+        ]);
+    }
 }

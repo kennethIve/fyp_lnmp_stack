@@ -36,3 +36,6 @@ Route::post('/ingredientSearch', 'API\RecipeApiController@ingredientSearch')->mi
 Route::post('/search', 'API\RecipeApiController@search')->middleware("restfulapi");
 //for crawler to get
 Route::post('/insertFromBbcFood', 'API\RecipeApiController@insertFromBbcFood')->middleware("restfulapi");
+
+//for update old image path api // disable after use
+Route::get('/updateImage', 'API\RecipeApiController@updateImage');
