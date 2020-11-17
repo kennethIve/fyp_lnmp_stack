@@ -170,7 +170,7 @@ class RecipeApiController extends Controller
         $new_image = $request->input("new_image");
         $r = Recipe::find($recipe_id);
         $r->image = $new_image;
-        //$r->save();
+        $r->save();
         return response()->json([
             'success' => "success",
             "query"=>$r->image,
