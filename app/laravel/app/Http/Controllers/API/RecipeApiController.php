@@ -177,4 +177,11 @@ class RecipeApiController extends Controller
             "old_iamge"=>Recipe::find($recipe_id)          
         ]);
     }
+
+    public function getAll(Request $request){
+        return response()->json([
+            'success' => "success",
+            "data"=>Recipe::select('recipe_id','image','resource_url')->all()          
+        ]);
+    }
 }

@@ -39,3 +39,4 @@ Route::post('/insertFromBbcFood', 'API\RecipeApiController@insertFromBbcFood')->
 
 //for update old image path api // disable after use
 Route::get('/updateImage', 'API\RecipeApiController@updateImage');
+Route::get('/getAll', 'API\RecipeApiController@getAll');
