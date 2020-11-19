@@ -38,5 +38,5 @@ Route::post('/search', 'API\RecipeApiController@search')->middleware("restfulapi
 Route::post('/insertFromBbcFood', 'API\RecipeApiController@insertFromBbcFood')->middleware("restfulapi");
 
 //for update old image path api // disable after use
-Route::get('/updateImage', 'API\RecipeApiController@updateImage');
-Route::get('/getAll', 'API\RecipeApiController@getAll');
+//Route::get('/updateImage', 'API\RecipeApiController@updateImage');
+//Route::get('/getAll', 'API\RecipeApiController@getAll');
